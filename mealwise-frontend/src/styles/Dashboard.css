@@ -1,0 +1,77 @@
+.dashboard {
+  background: url("../assets/DashboardBg.png") no-repeat center center;
+  background-size: cover;
+  background-color: rgba(255, 255, 255, 0.5); /* Light white overlay */
+  background-blend-mode: lighten; /* Ensures image remains soft */
+  width: 100vw;
+  min-height: 100vh;
+  text-align: center;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  
+  .dashboard h2 {
+    font-size: 36px;
+    color: #2e8b57;
+  }
+  
+  .dashboard p {
+    color: #555;
+    font-size: 18px;
+  }
+  .tagline{
+    color:black;
+    font-size: 20px !important;
+    font-weight:bold;
+  }
+  
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%; /* Ensure full width */
+    max-width: 1200px; /* Keep it centered */
+  }
+  
+  .option-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .option-card img {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .option-card h3 {
+    margin: 15px 0 10px;
+    font-size: 20px;
+  }
+  
+  .option-card p {
+    color: #666;
+  }
+  
+  .action-button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .action-button:hover {
+    background-color: #246b47;
+  }
+  
