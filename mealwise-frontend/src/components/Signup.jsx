@@ -83,7 +83,7 @@ const Signup = () => {
           onChange={(e) => setPhoneNumber(e.target.value)}
           required
         />
-        <select
+        <select className="gender"
           value={gender}
           onChange={(e) => setGender(e.target.value)}
           required
@@ -109,7 +109,7 @@ const Signup = () => {
         />
         <button type="submit">Sign Up</button>
       </form>
-      <p>
+      <p className='para'>
         Already have an account?{" "}
         <span className="toggle-link" onClick={() => navigate("/login")}>
           Login
