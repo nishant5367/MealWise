@@ -3,12 +3,15 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   background: url("../assets/DashboardBg.png") no-repeat center center fixed;
+  background-color: rgba(255, 255, 255, 0.5); /* Light white overlay */
+  background-blend-mode: lighten; 
   background-size: cover;
 }
 
 .auth-container {
   text-align: center;
-  background: rgba(30, 30, 30, 0.9); /* Slight dark overlay */
+  background: rgba(255, 255, 255, 0.9); 
+ 
   color: white;
   padding: 50px;
   width: 100%;
@@ -21,7 +24,9 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+.auth-container h2{
+  color: #2e8b57;
+}
 .auth-container h2 {
   font-size: 24px;
   margin-bottom: 20px;
@@ -32,11 +37,13 @@ body {
   flex-direction: column;
 }
 
-.auth-container input {
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: none;
+.auth-container input,select {
+  margin: 15px 0;
+  padding: 12px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
 }
 
 .auth-container button {
@@ -66,4 +73,7 @@ body {
 
 .toggle-link:hover {
   text-decoration: underline;
+}
+.para{
+  color:black;
 }
