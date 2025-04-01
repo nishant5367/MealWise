@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import '../styles/Questionnaire.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const questions = [
     { question: "What's your age?", type: "number", placeholder: "Enter your age" },
@@ -11,6 +13,8 @@ const questions = [
 ];
 
 const Questionnaire = () => {
+    
+    const navigate = useNavigate();
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [responses, setResponses] = useState({});
     const [error, setError] = useState('');
@@ -82,6 +86,41 @@ const Questionnaire = () => {
         });
         setError('');  // Clear error on valid selection
     };
+    const submitResponses = async () => {
+        if (!validateInput()) return;
+    
+        const username = localStorage.getItem("username");
+        if (!username) {
+            alert("User not logged in.");
+            return;
+        }
+    
+        try {
+            const response = await fetch("http://localhost:8080/api/questionnaire/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    responses: responses
+                }),
+                mode: "cors"
+            });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}`);
+            }
+    
+            const result = await response.text();
+            alert(result); // e.g., "Questionnaire saved successfully!"
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Error submitting questionnaire:", error);
+            alert("Something went wrong while submitting. Please try again.");
+        }
+    };
+    
 
     return (
         <div className="container">
@@ -134,7 +173,7 @@ const Questionnaire = () => {
                     {currentQuestion < questions.length - 1 ? (
                         <button onClick={handleNext} className="button next-button">Next</button>
                     ) : (
-                        <button className="button submit-button" onClick={() => alert('Questionnaire Submitted!')}>Submit</button>
+                        <button className="button submit-button" onClick={submitResponses}>Submit</button>
                     )}
                 </div>
             </div>

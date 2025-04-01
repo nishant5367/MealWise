@@ -1,16 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
+  const location = useLocation();
+  const isDashboard = location.pathname === "/dashboard";
+
   return (
     <nav className="navbar">
-       {/* Clickable Logo to redirect to home page */}
-       <div className="logo">
+      <div className="logo">
         <Link to="/" className="logo-link">MealWise</Link>
       </div>
+
       <div className="nav-links">
-        <Link to="/about" className="about-btn">About Us</Link>
+        {isDashboard ? (
+          <Link to="/profile" className="nav-btn">Profile</Link>
+        ) : (
+          <Link to="/about" className="nav-btn">About Us</Link>
+        )}
       </div>
     </nav>
   );

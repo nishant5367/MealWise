@@ -30,7 +30,7 @@
   align-items: center;
 }
 
-.about-btn {
+.nav-btn {
   background-color: #2e8b57;
   color: white;
   border: none;
@@ -38,9 +38,10 @@
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 40px; /* Ensures it doesn't go out of bounds */
+  margin-right: 40px;
 }
 
-.about-btn:hover {
+.nav-btn:hover {
   background-color: #256d44;
 }
+
