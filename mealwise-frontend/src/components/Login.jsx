@@ -1,5 +1,4 @@
-// Login.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cognito from "../cognitoConfig";
 import "../styles/Auth.css";
@@ -12,39 +11,58 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error message
+    setError("");
 
-    const username = email.split('@')[0];  // Extract the username from the email
+    const username = email.split('@')[0];
 
     const params = {
-        AuthFlow: "USER_PASSWORD_AUTH",
-        ClientId: "38ml86305n6s418eu5h4dc7vua",  // Your App Client ID
-        AuthParameters: {
-            USERNAME: username,  // Try using the username part instead of the full email
-            PASSWORD: password,
-        },
+      AuthFlow: "USER_PASSWORD_AUTH",
+      ClientId: "38ml86305n6s418eu5h4dc7vua",
+      AuthParameters: {
+        USERNAME: username,
+        PASSWORD: password,
+      },
     };
 
     try {
-        const result = await cognito.initiateAuth(params).promise();
-        console.log("Login successful:", result);
-        alert("Login successful!");
+      const result = await cognito.initiateAuth(params).promise();
+      console.log("Login successful:", result);
+      alert("Login successful!");
+
+      localStorage.setItem("username", username);
+
+      // ✅ Check if questionnaire already submitted
+      const response = await fetch(`http://localhost:8080/api/questionnaire/status/${username}`);
+      
+      if (!response.ok) {
+        throw new Error(`Status check failed: ${response.status}`);
+      }
+
+      const hasSubmitted = await response.json();
+
+      // ✅ Navigate accordingly
+      if (hasSubmitted) {
         navigate("/dashboard");
+      } else {
+        navigate("/questionnaire");
+      }
+
     } catch (err) {
-        console.error("Login failed:", err);
+      console.error("Login failed:", err);
 
-        if (err.code === "NotAuthorizedException") {
-            setError("Incorrect username or password.");
-        } else if (err.code === "UserNotFoundException") {
-            setError("User does not exist. Please sign up first.");
-        } else if (err.code === "UserNotConfirmedException") {
-            setError("User not confirmed. Please check your email for the verification code.");
-        } else {
-            setError("Login failed. Please try again.");
-        }
+      if (err.message?.includes("Status check failed")) {
+        setError("Couldn't verify account setup. Please try again.");
+      } else if (err.code === "NotAuthorizedException") {
+        setError("Incorrect username or password.");
+      } else if (err.code === "UserNotFoundException") {
+        setError("User does not exist. Please sign up first.");
+      } else if (err.code === "UserNotConfirmedException") {
+        setError("User not confirmed. Please check your email for the verification code.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
     }
-};
-
+  };
 
   return (
     <div className="auth-container">
@@ -68,7 +86,7 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p className="para">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <span className="toggle-link" onClick={() => navigate("/signup")}>
           Sign Up
         </span>
