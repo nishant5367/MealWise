@@ -1,6 +1,4 @@
-// Login.jsx
 import React, { useState } from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cognito from "../cognitoConfig";
 import "../styles/Auth.css";
@@ -15,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     setError("");
 
-    const username = email.split('@')[0];
+    const username = email.split("@")[0];
 
     const params = {
       AuthFlow: "USER_PASSWORD_AUTH",
@@ -28,17 +26,17 @@ const Login = () => {
 
     try {
       const result = await cognito.initiateAuth(params).promise();
-      console.log("Login successful:", result);
+      console.log("✅ Login successful:", result);
       alert("Login successful!");
 
+      // ✅ Store user data in localStorage
       localStorage.setItem("username", username);
+      localStorage.setItem("email", email);
+      localStorage.setItem("name", username); // Optional: alias for display
 
-      // ✅ Check if questionnaire already submitted
+      // ✅ Check if questionnaire submitted
       const response = await fetch(`http://localhost:8080/api/questionnaire/status/${username}`);
-      
-      if (!response.ok) {
-        throw new Error(`Status check failed: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`Status check failed: ${response.status}`);
 
       const hasSubmitted = await response.json();
 
@@ -50,7 +48,7 @@ const Login = () => {
       }
 
     } catch (err) {
-      console.error("Login failed:", err);
+      console.error("❌ Login failed:", err);
 
       if (err.message?.includes("Status check failed")) {
         setError("Couldn't verify account setup. Please try again.");

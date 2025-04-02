@@ -8,6 +8,8 @@ import Dashboard from "./components/Dashboard";
 import Navbar from "./components/Navbar";
 import Questionnaire from "./components/Questionnaire";
 import Profile from "./components/Profile"; // ✅ Import Profile
+import MealLog from "./components/MealLog";
+
 
 const AppRoutes = () => {
   return (
@@ -20,6 +22,7 @@ const AppRoutes = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/questionnaire" element={<Questionnaire />} />
+        <Route path="/meallog" element={<MealLog/>}/>
         <Route
           path="/profile"
           element={

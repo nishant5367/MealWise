@@ -1,2 +1,4 @@
-com\mealwise\lambda\FetchUserMeals.class
+com\mealwise\lambda\GetMealLogsHandler.class
+com\mealwise\lambda\MealLogHandler.class
 com\mealwise\lambda\FetchUserData.class
+com\mealwise\lambda\FetchUserMeals.class

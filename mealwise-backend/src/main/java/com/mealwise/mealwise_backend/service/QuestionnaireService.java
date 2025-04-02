@@ -7,10 +7,13 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.GetItemResponse;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.QueryRequest;
+import software.amazon.awssdk.services.dynamodb.model.QueryResponse;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionnaireService {
@@ -22,26 +25,20 @@ public class QuestionnaireService {
         this.dynamoDbClient = dynamoDbClient;
     }
     public boolean hasSubmitted(String username) {
-        try {
-            Map<String, AttributeValue> key = new HashMap<>();
-            key.put("Username", AttributeValue.builder().s(username).build());
+        Map<String, AttributeValue> expressionValues = new HashMap<>();
+        expressionValues.put(":val", AttributeValue.builder().s(username).build());
     
-            GetItemRequest request = GetItemRequest.builder()
-                .tableName("QuestionnaireResponse")
-                .key(key)
-                .build();
-        
-            GetItemResponse response = dynamoDbClient.getItem(request);
-            boolean found = response.hasItem();  // ✅ returns true if record exists
-            System.out.println("✅ Found in DB? " + found);
-            return found;
-
+        QueryRequest request = QueryRequest.builder()
+            .tableName("QuestionnaireResponse")
+            .indexName("Username-index") // Match your actual GSI name
+            .keyConditionExpression("Username = :val")
+            .expressionAttributeValues(expressionValues)
+            .build();
     
-        } catch (Exception e) {
-            e.printStackTrace();  //  will show the actual cause in console
-            return false;         // fallback behavior
-        }
+        QueryResponse response = dynamoDbClient.query(request);
+        return response.count() > 0;
     }
+    
     
 
 
@@ -77,4 +74,37 @@ public class QuestionnaireService {
             throw new RuntimeException("Error saving questionnaire response to DynamoDB");
         }
     }
+    public Map<String, Object> getByUsername(String username) {
+        try {
+            Map<String, AttributeValue> expressionValues = new HashMap<>();
+            expressionValues.put(":val", AttributeValue.builder().s(username).build());
+    
+            QueryRequest queryRequest = QueryRequest.builder()
+                .tableName("QuestionnaireResponse")
+                .indexName("Username-index") // ⚠️ Replace with your actual GSI name
+                .keyConditionExpression("Username = :val")
+                .expressionAttributeValues(expressionValues)
+                .build();
+    
+            QueryResponse response = dynamoDbClient.query(queryRequest);
+    
+            if (response.count() == 0) {
+                System.out.println("No data found for user: " + username);
+                return null;
+            }
+    
+            return response.items().get(0).entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> {
+                    AttributeValue val = e.getValue();
+                    if (val.s() != null) return val.s();
+                    if (val.n() != null) return val.n();
+                    if (val.bool() != null) return val.bool();
+                    return val.toString();
+                }));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to fetch questionnaire by username.");
+        }
+    }
+    
 }
