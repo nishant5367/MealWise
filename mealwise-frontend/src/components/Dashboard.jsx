@@ -1,13 +1,15 @@
 import "../styles/Dashboard.css"; 
 import CalorieCounter from "../assets/CalorieCount.jpg";
 import MealPlanner from "../assets/MealPlan.jpg";
-import { Link } from "react-router-dom"; // ✅ Add this import
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
       <h2>Welcome to MealWise – Your AI-Powered Nutrition Companion!</h2>
-      <p className="tagline">Effortless meal tracking and personalized AI-driven nutrition plans tailored just for you.</p>
+      <p className="tagline">
+        Effortless meal tracking and personalized AI-driven nutrition plans tailored just for you.
+      </p>
 
       <div className="options">
         <div className="option-card">
@@ -23,7 +25,9 @@ const Dashboard = () => {
           <img src={MealPlanner} alt="Healthy meals" />
           <h3>AI Meal Plan</h3>
           <p>Get AI-generated meal plans and recommendations.</p>
-          <button className="action-button">Get Meal Plan</button>
+          <Link to="/meal-recommend">
+            <button className="action-button">Get Meal Plan</button>
+          </Link>
         </div>
       </div>
     </div>
