@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-// import '../styles/Profile.css'; // Reusing your dashboard-style CSS
+import { ReactMic } from 'react-mic';
+import AWS from 'aws-sdk';
 import '../styles/MealLog.css';
-
 
 const MealLog = () => {
   const [meal, setMeal] = useState('');
@@ -9,10 +9,78 @@ const MealLog = () => {
   const [calories, setCalories] = useState('');
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [record, setRecord] = useState(false);
+  const [audioURL, setAudioURL] = useState('');
 
   const username = localStorage.getItem("username");
 
-  // Fetch meals from backend
+  const startRecording = () => setRecord(true);
+  const stopRecording = () => setRecord(false);
+
+  function parseMealData(transcription) {
+    const mealMatch = transcription.match(/\b(breakfast|lunch|dinner|snack)\b/i);
+    const caloriesMatch = transcription.match(/(\d+)\s*(kcal|calories?)/i);
+    const foodMatch = transcription.match(/ate\s+(a|an|some)?\s*([\w\s]+)/i);
+
+    const meal = mealMatch ? mealMatch[1].toLowerCase() : '';
+    const calories = caloriesMatch ? caloriesMatch[1] : '';
+    const food = foodMatch ? foodMatch[2].split(' ')[0] : '';
+
+    return { meal, food, calories };
+  }
+
+  const onStop = async (recordedBlob) => {
+    const fileName = `audio-${Date.now()}.webm`;
+    setAudioURL(URL.createObjectURL(recordedBlob.blob));
+
+    // ✅ Securely configure Cognito credentials
+    AWS.config.region = 'ap-south-1';
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'ap-south-1:8d12ec4c-da49-4150-8fdb-15c074ef71ab',
+    });
+
+    // ✅ Get temporary credentials and upload
+    AWS.config.credentials.get(async () => {
+      const s3 = new AWS.S3({
+        apiVersion: '2006-03-01',
+        params: { Bucket: 'mealwise-audio-logs' },
+      });
+
+      const params = {
+        Key: fileName,
+        Body: recordedBlob.blob,
+        ContentType: 'audio/webm',
+        ACL: 'bucket-owner-full-control',
+      };
+
+      try {
+        await s3.upload(params).promise();
+        alert("✅ Audio uploaded. Starting transcription...");
+
+        const res = await fetch("https://yrh0xomcy1.execute-api.ap-south-1.amazonaws.com/prod/start-transcribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ bucket: "mealwise-audio-logs", key: fileName }),
+        });
+
+        const { transcription } = await res.json();
+
+        if (res.ok) {
+          alert("✅ Transcription: " + transcription);
+          const parsed = parseMealData(transcription);
+          setMeal(parsed.meal);
+          setFood(parsed.food);
+          setCalories(parsed.calories);
+        } else {
+          alert("❌ Transcription failed.");
+        }
+      } catch (err) {
+        console.error("Recording/Upload Error:", err);
+        alert("❌ Upload failed.");
+      }
+    });
+  };
+
   const fetchLogs = async () => {
     setLoading(true);
     try {
@@ -36,7 +104,6 @@ const MealLog = () => {
     fetchLogs();
   }, []);
 
-  // Submit new meal
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
@@ -74,38 +141,53 @@ const MealLog = () => {
   return (
     <div className="meallog-wrapper">
       <h2 className="meallog-heading">Log Your Meals</h2>
-  
+
       <div className="meallog-dashboard">
-        {/* Meal Input Form */}
         <div className="meallog-tile form-tile">
           <h3>Meal Entry</h3>
+
+          <div className="voice-log-section">
+            <h4>🎙️ Log by Voice</h4>
+            <ReactMic
+              record={record}
+              className="sound-wave"
+              onStop={onStop}
+              strokeColor="#2e7d32"
+              backgroundColor="#e0f2f1"
+            />
+            <div style={{ marginTop: '10px' }}>
+              <button type="button" onClick={startRecording}>Start</button>
+              <button type="button" onClick={stopRecording}>Stop & Transcribe</button>
+            </div>
+            {audioURL && <audio controls src={audioURL}></audio>}
+          </div>
+
           <form onSubmit={handleSubmit}>
-            <input 
-              type="text" 
-              value={meal} 
-              onChange={(e) => setMeal(e.target.value)} 
-              placeholder="Meal (e.g., Lunch)" 
-              required 
+            <input
+              type="text"
+              value={meal}
+              onChange={(e) => setMeal(e.target.value)}
+              placeholder="Meal (e.g., Lunch)"
+              required
             />
-            <input 
-              type="text" 
-              value={food} 
-              onChange={(e) => setFood(e.target.value)} 
-              placeholder="Food Item" 
-              required 
+            <input
+              type="text"
+              value={food}
+              onChange={(e) => setFood(e.target.value)}
+              placeholder="Food Item"
+              required
             />
-            <input 
-              type="number" 
-              value={calories} 
-              onChange={(e) => setCalories(e.target.value)} 
-              placeholder="Calories" 
-              required 
+            <input
+              type="number"
+              value={calories}
+              onChange={(e) => setCalories(e.target.value)}
+              placeholder="Calories"
+              required
             />
             <button type="submit">Submit</button>
           </form>
         </div>
-  
-        {/* Meal Logs */}
+
         <div className="meallog-tile logs-tile">
           <h3>Logged Meals</h3>
           {loading ? (
@@ -126,10 +208,13 @@ const MealLog = () => {
       </div>
     </div>
   );
-  
 };
 
 export default MealLog;
+
+
+
+
 // import  { useState } from "react";
 // import PropTypes from "prop-types";
 // import { Plus, Trash2, Pencil } from "lucide-react";
