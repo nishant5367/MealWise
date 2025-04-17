@@ -20,20 +20,24 @@
     color: #2a8a54;
     font-size: 2.2rem;
     font-weight: bold;
-    margin-bottom: 2rem;
+    margin: 3rem 0 2rem; 
   }
   
   /* =============================
      📦 Card Container
   ============================= */
   .meallog-dashboard {
+    justify-content: space-evenly;
     display: flex;
     justify-content: center;
     gap: 2rem;
-    width: 100%;
-    max-width: 1200px; /* Increased maximum width */
-    padding: 0 1rem;
+    width: 100vw;
+    padding:0;
+    padding-top: 2rem;        /* Removed side padding */
+    max-width: none;    /* Allow full screen width */
+    margin: 0;          /* Optional: remove any margin */
 }
+
 
   
   /* =============================
@@ -45,8 +49,8 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     padding: 1.5rem;
     flex: 1; /* Allows cards to grow */
-    min-width: 45%; /* Minimum width for each card */
-    max-width: 600px; /* Maximum width for each card */
+    min-width: 320px; /* Minimum width for each card */
+    max-width: 480px; /* Maximum width for each card */
     box-sizing: border-box;
 }
   
