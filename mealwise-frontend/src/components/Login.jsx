@@ -29,12 +29,15 @@ const Login = () => {
       console.log("✅ Login successful:", result);
       alert("Login successful!");
 
-      // ✅ Store user data in localStorage
+      const idToken = result.AuthenticationResult?.IdToken;
+
+      // ✅ Store tokens and user info in localStorage
       localStorage.setItem("username", username);
       localStorage.setItem("email", email);
-      localStorage.setItem("name", username); // Optional: alias for display
+      localStorage.setItem("idToken", idToken); // ✅ Needed for Lex authentication
+      localStorage.setItem("name", username);   // Optional alias for greeting
 
-      // ✅ Check if questionnaire submitted
+      // ✅ Check if questionnaire was submitted
       const response = await fetch(`http://localhost:8080/api/questionnaire/status/${username}`);
       if (!response.ok) throw new Error(`Status check failed: ${response.status}`);
 

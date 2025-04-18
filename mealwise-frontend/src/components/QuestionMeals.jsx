@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/QuestionMeals.css';
+import MiliBotLauncher from './MiliBotLauncher'; // ✅ Import MiliBotLauncher
 
 function QuestionMeals() {
   const [formData, setFormData] = useState({
@@ -93,13 +94,13 @@ function QuestionMeals() {
     <div className="question-meals-wrapper">
       <div className="questionnaire">
         <h2>🥗 Personalized Meal Plan Questionnaire</h2>
-  
+
         <form onSubmit={handleSubmit}>
           <label>
             Age:
             <input type="number" name="Age" value={formData.Age} onChange={handleChange} required />
           </label>
-  
+
           <label>
             Gender:
             <select name="Gender" value={formData.Gender} onChange={handleChange}>
@@ -107,7 +108,7 @@ function QuestionMeals() {
               <option>Female</option>
             </select>
           </label>
-  
+
           <label>
             Weight Goal:
             <select name="Weight_Goal" value={formData.Weight_Goal} onChange={handleChange}>
@@ -116,7 +117,7 @@ function QuestionMeals() {
               <option>Maintain</option>
             </select>
           </label>
-  
+
           <label>
             Health Condition:
             <select name="Health_Condition" value={formData.Health_Condition} onChange={handleChange}>
@@ -126,7 +127,7 @@ function QuestionMeals() {
               <option>PCOS</option>
             </select>
           </label>
-  
+
           <label>
             Diet Type:
             <select name="Diet_Type" value={formData.Diet_Type} onChange={handleChange}>
@@ -134,7 +135,7 @@ function QuestionMeals() {
               <option>Non-Veg</option>
             </select>
           </label>
-  
+
           <label>
             Activity Level:
             <select name="Activity_Level" value={formData.Activity_Level} onChange={handleChange}>
@@ -143,17 +144,17 @@ function QuestionMeals() {
               <option>Active</option>
             </select>
           </label>
-  
+
           <button type="submit">🍽️ Get Meal Plan</button>
         </form>
-  
+
         {loading && <p style={{ textAlign: 'center' }}>Generating recommendations...</p>}
-  
+
         {recommendations && (
           <>
             <div className="recommendations">
               <h3>🌟 Your Personalized Meal Recommendations</h3>
-  
+
               <div className="meal-groups">
                 {Object.entries(recommendations).map(([mealType, meals]) => (
                   <div className="meal-group" key={mealType}>
@@ -168,7 +169,7 @@ function QuestionMeals() {
                   </div>
                 ))}
               </div>
-  
+
               <div className="action-buttons">
                 <button className="secondary-button" onClick={handleRegenerate}>
                   🔁 Regenerate Plan
@@ -181,25 +182,24 @@ function QuestionMeals() {
                 </button>
               </div>
             </div>
-  
-            {/* ✅ News Below */}
+
             <div className="news-section">
               <h3>📰 Latest Food News</h3>
-  
+
               <div className="news-item">
                 <a href="https://www.reuters.com/world/india/india-receive-above-average-monsoon-rains-2025-government-says-2025-04-15/" target="_blank" rel="noopener noreferrer">
                   India forecasts above average monsoon rains for 2025 🌾
                 </a>
                 <p>Expected monsoons will impact food production and crop yield.</p>
               </div>
-  
+
               <div className="news-item">
                 <a href="https://www.reuters.com/sustainability/land-use-biodiversity/indias-government-sugar-industry-face-off-over-jute-bags-2025-04-15/" target="_blank" rel="noopener noreferrer">
                   Govt vs Sugar Industry on Jute Bag Usage 🧃
                 </a>
                 <p>Legal debate arises over eco-friendly jute packaging for food transport.</p>
               </div>
-  
+
               <div className="news-item">
                 <a href="https://www.reuters.com/world/india/indias-march-retail-inflation-eases-334-yy-2025-04-15/" target="_blank" rel="noopener noreferrer">
                   Food inflation drops to 5-year low 📉
@@ -210,9 +210,11 @@ function QuestionMeals() {
           </>
         )}
       </div>
+
+      {/* ✅ Floating chatbot button (Mili) only visible on this page */}
+      <MiliBotLauncher />
     </div>
   );
-  
 }
 
 export default QuestionMeals;
