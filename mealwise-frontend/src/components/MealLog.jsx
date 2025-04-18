@@ -55,7 +55,7 @@ const MealLog = () => {
 
       try {
         await s3.upload(params).promise();
-        alert("✅ Audio uploaded. Starting transcription...");
+        alert(" Audio uploaded. Starting transcription...");
 
         const res = await fetch("https://yrh0xomcy1.execute-api.ap-south-1.amazonaws.com/prod/start-transcribe", {
           method: "POST",
@@ -66,17 +66,17 @@ const MealLog = () => {
         const { transcription } = await res.json();
 
         if (res.ok) {
-          alert("✅ Transcription: " + transcription);
+          alert(" Transcription: " + transcription);
           const parsed = parseMealData(transcription);
           setMeal(parsed.meal);
           setFood(parsed.food);
           setCalories(parsed.calories);
         } else {
-          alert("❌ Transcription failed.");
+          alert(" Transcription failed.");
         }
       } catch (err) {
         console.error("Recording/Upload Error:", err);
-        alert("❌ Upload failed.");
+        alert(" Upload failed.");
       }
     });
   };
@@ -124,17 +124,17 @@ const MealLog = () => {
       const result = await res.text();
 
       if (res.ok) {
-        alert("✅ Meal logged!");
+        alert(" Meal logged!");
         setMeal('');
         setFood('');
         setCalories('');
         fetchLogs();
       } else {
-        alert("❌ Failed to log meal:\n" + result);
+        alert(" Failed to log meal:\n" + result);
       }
     } catch (err) {
       console.error("Error:", err);
-      alert("❌ Error logging meal.");
+      alert(" Error logging meal.");
     }
   };
 
@@ -147,7 +147,7 @@ const MealLog = () => {
           <h3>Meal Entry</h3>
 
           <div className="voice-log-section">
-            <h4>🎙️ Log by Voice</h4>
+            <h4> Log by Voice</h4>
             <ReactMic
               record={record}
               className="sound-wave"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import  { useEffect, useState, useRef } from "react";
 import { jsPDF } from "jspdf";
 import {
   LexRuntimeV2Client,

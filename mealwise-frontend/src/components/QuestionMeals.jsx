@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import '../styles/QuestionMeals.css';
 import MiliBotLauncher from './MiliBotLauncher'; // ✅ Import MiliBotLauncher
 
@@ -61,10 +61,10 @@ function QuestionMeals() {
           recommendations
         })
       });
-      alert("✅ Meal plan saved to Meal Log!");
+      alert(" Meal plan saved to Meal Log!");
     } catch (err) {
       console.error("Error logging meal plan:", err);
-      alert("❌ Failed to save meal plan.");
+      alert(" Failed to save meal plan.");
     }
   };
 
@@ -93,7 +93,7 @@ function QuestionMeals() {
   return (
     <div className="question-meals-wrapper">
       <div className="questionnaire">
-        <h2>🥗 Personalized Meal Plan Questionnaire</h2>
+        <h2> Personalized Meal Plan Questionnaire</h2>
 
         <form onSubmit={handleSubmit}>
           <label>
@@ -145,7 +145,7 @@ function QuestionMeals() {
             </select>
           </label>
 
-          <button type="submit">🍽️ Get Meal Plan</button>
+          <button type="submit"> Get Meal Plan</button>
         </form>
 
         {loading && <p style={{ textAlign: 'center' }}>Generating recommendations...</p>}
@@ -153,12 +153,12 @@ function QuestionMeals() {
         {recommendations && (
           <>
             <div className="recommendations">
-              <h3>🌟 Your Personalized Meal Recommendations</h3>
+              <h3> Your Personalized Meal Recommendations</h3>
 
               <div className="meal-groups">
                 {Object.entries(recommendations).map(([mealType, meals]) => (
                   <div className="meal-group" key={mealType}>
-                    <h4>🍱 {mealType.charAt(0).toUpperCase() + mealType.slice(1)}</h4>
+                    <h4> {mealType.charAt(0).toUpperCase() + mealType.slice(1)}</h4>
                     <div className="meal-cards">
                       {meals.map((dish, i) => (
                         <div className="meal-card" key={i}>
@@ -172,37 +172,37 @@ function QuestionMeals() {
 
               <div className="action-buttons">
                 <button className="secondary-button" onClick={handleRegenerate}>
-                  🔁 Regenerate Plan
+                   Regenerate Plan
                 </button>
                 <button className="primary-button" onClick={handleAccept}>
-                  ✅ Accept & Save to Meal Log
+                   Accept & Save to Meal Log
                 </button>
                 <button className="primary-button" onClick={handleExport}>
-                  📄 Export to PDF
+                   Export to PDF
                 </button>
               </div>
             </div>
 
             <div className="news-section">
-              <h3>📰 Latest Food News</h3>
+              <h3> Latest Food News</h3>
 
               <div className="news-item">
                 <a href="https://www.reuters.com/world/india/india-receive-above-average-monsoon-rains-2025-government-says-2025-04-15/" target="_blank" rel="noopener noreferrer">
-                  India forecasts above average monsoon rains for 2025 🌾
+                  India forecasts above average monsoon rains for 2025 
                 </a>
                 <p>Expected monsoons will impact food production and crop yield.</p>
               </div>
 
               <div className="news-item">
                 <a href="https://www.reuters.com/sustainability/land-use-biodiversity/indias-government-sugar-industry-face-off-over-jute-bags-2025-04-15/" target="_blank" rel="noopener noreferrer">
-                  Govt vs Sugar Industry on Jute Bag Usage 🧃
+                  Govt vs Sugar Industry on Jute Bag Usage 
                 </a>
                 <p>Legal debate arises over eco-friendly jute packaging for food transport.</p>
               </div>
 
               <div className="news-item">
                 <a href="https://www.reuters.com/world/india/indias-march-retail-inflation-eases-334-yy-2025-04-15/" target="_blank" rel="noopener noreferrer">
-                  Food inflation drops to 5-year low 📉
+                  Food inflation drops to 5-year low 
                 </a>
                 <p>Retail prices fall as food costs stabilize in early 2025.</p>
               </div>
