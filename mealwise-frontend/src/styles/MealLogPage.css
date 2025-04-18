@@ -1,0 +1,195 @@
+body {
+    background-color: #f4fdf5;
+    background-image: url('../assets/DashboardBg.png');
+    background-repeat: repeat-y;
+    background-size: cover; /* or 'contain' based on preference */
+    background-attachment: fixed; /* optional for parallax-like effect */
+    background-position: center;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 2rem 0 0 0;
+    color: #1c1c1c;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* ✅ Ensures background stretches full height */
+  }
+  
+  
+  
+  .meal-log-container {
+    padding: 2rem;
+    width: 100vh;
+    margin: 2rem auto 0 auto; /* Added top margin */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  .heading {
+    text-align: center;
+    color: #2a8a54;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .total-bar-wrapper {
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+  
+  .total-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    margin: 0 auto;
+    width: 90%;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .total-fill {
+    height: 100%;
+    background-color: #16a34a;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  
+  .meal-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    padding: 1rem; /* reduced from 1.5rem */
+    margin-bottom: 1rem; /* slightly tighter spacing */
+    width: 100%;
+    max-width: 400px;  /* reduced from 250px */
+    height: auto;      /* allow dynamic height */
+    align-self: center;
+    position: relative;
+  }
+  
+  
+  .meal-card-content {
+    padding: 1rem;
+  }
+  
+  .meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .meal-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .progress-bar {
+    background-color: #e2e8f0;
+    height: 6px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: #4ade80;
+    transition: width 0.3s ease-in-out;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  
+  .meal-desc {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+  }
+  
+  .meal-item {
+    background-color: #e6f9ef;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .meal-item-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .btn {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .default {
+    background-color: #2a8a54;
+    color: white;
+  }
+  
+  .outline {
+    border: 1px solid #2a8a54;
+    background-color: white;
+    color: #2a8a54;
+  }
+  
+  .ghost {
+    background-color: transparent;
+    color: #2a8a54;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .modal-box {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    width: 320px;
+  }
+  
+  .modal-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .flex-gap {
+    display: flex;
+    gap: 0.75rem;
+  }
+  

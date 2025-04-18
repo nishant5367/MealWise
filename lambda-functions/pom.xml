@@ -36,6 +36,12 @@
   <artifactId>auth</artifactId>
   <version>2.20.132</version>
 </dependency>
+<dependency>
+  <groupId>software.amazon.awssdk</groupId>
+  <artifactId>sns</artifactId>
+  <version>2.25.9</version> <!-- or latest -->
+</dependency>
+
         <dependency>
   <groupId>com.fasterxml.jackson.core</groupId>
   <artifactId>jackson-databind</artifactId>
