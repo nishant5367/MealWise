@@ -22,24 +22,36 @@ function QuestionMeals() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
-      const res = await fetch('https://3.109.200.236/api/recommend', 
-        {
+      const res = await fetch('https://3.109.200.236/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-
-      const data = await res.json();
+  
+      let data;
+      try {
+        data = await res.json(); 
+      } catch (jsonError) {
+        console.error(" Failed to parse JSON:", jsonError);
+        throw new Error("Invalid JSON from server.");
+      }
+  
+      if (!res.ok) {
+        alert(`Server Error: ${data.message || 'Unexpected issue occurred.'}`);
+        return;
+      }
+  
       setRecommendations(data.recommendations);
     } catch (err) {
       console.error('Error:', err);
+      alert(`Something went wrong: ${err.message}`);
     }
-
+  
     setLoading(false);
   };
-
+  
   const handleRegenerate = () => {
     setFormData({
       Age: '',
