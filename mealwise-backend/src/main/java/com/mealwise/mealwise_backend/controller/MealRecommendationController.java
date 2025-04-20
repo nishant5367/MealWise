@@ -4,6 +4,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -25,10 +26,15 @@ public class MealRecommendationController {
             ResponseEntity<Map> response = restTemplate.postForEntity(flaskUrl, request, Map.class);
             return ResponseEntity.ok(response.getBody());
         } catch (Exception e) {
-            e.printStackTrace();  // Log to server console
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", e.getMessage()));
-        }
+    e.printStackTrace();  // Backend log
+
+    Map<String, String> errorResponse = new HashMap<>();
+    errorResponse.put("error", "Meal recommendation failed.");
+    errorResponse.put("details", e.getMessage());
+
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                         .body(errorResponse);
+}
     }
     
 }
