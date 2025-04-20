@@ -24,7 +24,7 @@ function QuestionMeals() {
     setLoading(true);
 
     try {
-      const res = await fetch('http://3.109.200.236/api/recommend', 
+      const res = await fetch('https://3.109.200.236/api/recommend', 
         {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -54,7 +54,7 @@ function QuestionMeals() {
 
   const handleAccept = async () => {
     try {
-      await fetch('http://3.109.200.236/api/logMealPlan', {
+      await fetch('https://3.109.200.236/api/logMealPlan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

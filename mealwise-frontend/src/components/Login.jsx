@@ -38,7 +38,7 @@ const Login = () => {
       localStorage.setItem("name", username);   // Optional alias for greeting
 
       // ✅ Check if questionnaire was submitted
-      const response = await fetch(`http://3.109.200.236/api/questionnaire/status/${username}`);
+      const response = await fetch(`https://3.109.200.236/api/questionnaire/status/${username}`);
 
       if (!response.ok) throw new Error(`Status check failed: ${response.status}`);
 
