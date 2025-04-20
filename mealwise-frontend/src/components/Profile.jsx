@@ -22,7 +22,7 @@ const Profile = () => {
       setUser({ name: username, email });
 
       try {
-        const response = await fetch(`http://3.109.200.236:8080/api/questionnaire/${username}`);
+        const response = await fetch(`http://3.109.200.236/api/questionnaire/${username}`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch user questionnaire");
