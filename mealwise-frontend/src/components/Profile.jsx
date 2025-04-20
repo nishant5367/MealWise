@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import '../styles/Profile.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,8 @@ const Profile = () => {
       setUser({ name: username, email });
 
       try {
-        const response = await fetch(`http://localhost:8080/api/questionnaire/${username}`);
+        const response = await fetch(`http://3.109.200.236:8080/api/questionnaire/${username}`);
+
         if (!response.ok) {
           throw new Error("Failed to fetch user questionnaire");
         }

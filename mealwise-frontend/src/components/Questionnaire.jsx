@@ -96,7 +96,7 @@ const Questionnaire = () => {
         }
     
         try {
-            const response = await fetch("http://localhost:8080/api/questionnaire/submit", {
+            const response = await fetch("http://3.109.200.236:8080/api/questionnaire/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

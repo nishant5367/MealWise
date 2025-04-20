@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://main.d2dyro99idehki.amplifyapp.com"
+})
 @RestController
 @RequestMapping("/api/questionnaire")
 public class QuestionnaireController {
