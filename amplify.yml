@@ -1,0 +1,17 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd mealwise-frontend
+        - npm install --legacy-peer-deps
+    build:
+      commands:
+        - npm run build  
+  artifacts:
+    baseDirectory: mealwise-frontend/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - mealwise-frontend/node_modules/**/*
