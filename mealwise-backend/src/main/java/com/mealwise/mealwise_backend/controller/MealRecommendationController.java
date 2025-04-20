@@ -15,7 +15,7 @@ public class MealRecommendationController {
     @PostMapping("/recommend")
     public ResponseEntity<?> getMealRecommendation(@RequestBody Map<String, Object> userInput) {
         RestTemplate restTemplate = new RestTemplate();
-        String flaskUrl = "https://3.109.200.236/recommend";
+        String flaskUrl = "http://127.0.0.1:5000/recommend";
     
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
