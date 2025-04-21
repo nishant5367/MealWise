@@ -15,7 +15,7 @@ public class PostConfirmationAutoSubscribe implements RequestHandler<Map<String,
     @Override
     public Object handleRequest(Map<String, Object> event, Context context) {
         try {
-            System.out.println("🔥 Raw Event: " + event);
+            System.out.println(" Raw Event: " + event);
 
             Map<String, Object> request = (Map<String, Object>) event.get("request");
             Map<String, String> userAttributes = (Map<String, String>) request.get("userAttributes");
@@ -31,13 +31,13 @@ public class PostConfirmationAutoSubscribe implements RequestHandler<Map<String,
 
                 snsClient.subscribe(requestSub);
 
-                System.out.println("✅ Successfully subscribed " + email + " to SNS topic.");
+                System.out.println("Successfully subscribed " + email + " to SNS topic.");
             } else {
-                System.out.println("⚠️ Email not found in user attributes.");
+                System.out.println(" Email not found in user attributes.");
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Error during subscription: " + e.getMessage());
+            System.err.println(" Error during subscription: " + e.getMessage());
         }
 
         return event;

@@ -24,7 +24,7 @@ function QuestionMeals() {
     setLoading(true);
   
     try {
-      const res = await fetch('https://3.109.200.236/api/recommend', {
+      const res = await fetch('https://mealwise-ml-api.onrender.com/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

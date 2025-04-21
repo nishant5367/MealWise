@@ -14,7 +14,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .cors(Customizer.withDefaults())
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .anyRequest().permitAll()   // ⛔ TEMPORARILY allow everything
+            .anyRequest().permitAll()   
         );
 
     return http.build();

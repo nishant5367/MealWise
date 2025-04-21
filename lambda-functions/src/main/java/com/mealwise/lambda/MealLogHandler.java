@@ -120,7 +120,7 @@ public class MealLogHandler implements RequestHandler<Map<String, Object>, Map<S
 
             if (username == null || food == null || caloriesRaw == null) {
                 response.put("statusCode", 400);
-                response.put("body", "❌ Required fields missing: username, food, or calories.");
+                response.put("body", " Required fields missing: username, food, or calories.");
                 return response;
             }
 
@@ -152,7 +152,7 @@ public class MealLogHandler implements RequestHandler<Map<String, Object>, Map<S
             String email = (String) claims.get("email");
 
             // ✅ Compose and send SNS email
-            String message = "🍽️ Hi " + username + ",\n\nYou logged " + meal + ": " + food + " (" + calories + " kcal) at " + timestamp;
+            String message = " Hi " + username + ",\n\nYou logged " + meal + ": " + food + " (" + calories + " kcal) at " + timestamp;
 
             PublishRequest publishRequest = PublishRequest.builder()
                     .message(message)
@@ -162,15 +162,15 @@ public class MealLogHandler implements RequestHandler<Map<String, Object>, Map<S
 
             snsClient.publish(publishRequest);
 
-            // ✅ Return response
+            //  Return response
             response.put("statusCode", 200);
-            response.put("body", "✅ Meal logged and email notification sent to: " + email);
+            response.put("body", " Meal logged and email notification sent to: " + email);
             return response;
 
         } catch (Exception e) {
             e.printStackTrace();
             response.put("statusCode", 500);
-            response.put("body", "❌ Error: " + e.getMessage());
+            response.put("body", " Error: " + e.getMessage());
             return response;
         }
     }

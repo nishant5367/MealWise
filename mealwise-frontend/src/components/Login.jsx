@@ -26,25 +26,25 @@ const Login = () => {
 
     try {
       const result = await cognito.initiateAuth(params).promise();
-      console.log("✅ Login successful:", result);
+      console.log(" Login successful:", result);
       alert("Login successful!");
 
       const idToken = result.AuthenticationResult?.IdToken;
 
-      // ✅ Store tokens and user info in localStorage
+      //  Store tokens and user info in localStorage
       localStorage.setItem("username", username);
       localStorage.setItem("email", email);
       localStorage.setItem("idToken", idToken); // ✅ Needed for Lex authentication
       localStorage.setItem("name", username);   // Optional alias for greeting
 
-      // ✅ Check if questionnaire was submitted
+      //  Check if questionnaire was submitted
       const response = await fetch(`https://3.109.200.236/api/questionnaire/status/${username}`);
 
       if (!response.ok) throw new Error(`Status check failed: ${response.status}`);
 
       const hasSubmitted = await response.json();
 
-      // ✅ Navigate accordingly
+      
       if (hasSubmitted) {
         navigate("/dashboard");
       } else {
@@ -52,7 +52,7 @@ const Login = () => {
       }
 
     } catch (err) {
-      console.error("❌ Login failed:", err);
+      console.error(" Login failed:", err);
 
       if (err.message?.includes("Status check failed")) {
         setError("Couldn't verify account setup. Please try again.");

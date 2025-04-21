@@ -33,13 +33,13 @@ const MealLog = () => {
     const fileName = `audio-${Date.now()}.webm`;
     setAudioURL(URL.createObjectURL(recordedBlob.blob));
 
-    // ✅ Securely configure Cognito credentials
+    //  Securely configure Cognito credentials
     AWS.config.region = 'ap-south-1';
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: 'ap-south-1:8d12ec4c-da49-4150-8fdb-15c074ef71ab',
     });
 
-    // ✅ Get temporary credentials and upload
+    //  Get temporary credentials and upload
     AWS.config.credentials.get(async () => {
       const s3 = new AWS.S3({
         apiVersion: '2006-03-01',
